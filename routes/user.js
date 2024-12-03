@@ -1,8 +1,9 @@
 const { Router } = require("express")
 const userRouter = Router();
-const { userModel } = require("../db")
+const { userModel, purchaseModel } = require("../db")
 const jwt = require("jsonwebtoken")
 const { JWT_USER_PASSWORD } = require("../config");
+const { userMiddleware } = require("../middleware/user");
 
     userRouter.post('/signup',async (req,res)=>{
         const { email, password, firstName, lastName } = req.body; //TODO:  adding zod validations
@@ -49,9 +50,15 @@ const { JWT_USER_PASSWORD } = require("../config");
 
     })
     
-    userRouter.get('/purchases',(req,res)=>{
+   userRouter.get('/purchases', userMiddleware, async (req,res)=>{
+
+        const userId = req.userId;
+
+        const purchases = await purchaseModel.find({
+            userId
+        })
         res.json({
-            message: "my purchases"
+            purchases
         })
     })
 
