@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require("mongoose");
 const { userRouter } = require("./routes/user")
 const { courseRouter } = require("./routes/course");
 const { adminRouter } = require('./routes/admin');
@@ -11,4 +12,10 @@ app.use("/api/vi/admin", adminRouter)
 app.use("/api/v1/course", courseRouter);
 
 
-app.listen(3000)
+async function main(){
+    await mongoose.connect("mongodb+srv://cyberkaps:kalpesh@cluster0.dyv70o5.mongodb.net/course-selling-web")
+    app.listen(3000)
+    console.log("listening on port 3000")
+}
+
+main();
