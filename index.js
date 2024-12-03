@@ -14,7 +14,7 @@ app.use("/api/v1/course", courseRouter);
 
 
 async function main(){
-    await mongoose.connect("mongodb+srv://cyberkaps:kalpesh@cluster0.dyv70o5.mongodb.net/course-selling-web")
+    await mongoose.connect("")
     app.listen(3000)
     console.log("listening on port 3000")
 }
