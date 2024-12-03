@@ -3,7 +3,9 @@ const adminRouter = Router();
 const { adminModel } = require("../db")
 
 const jwt = require("jsonwebtoken")
-const JWT_ADMIN_PASSWORD = "admin"
+const { JWT_ADMIN_PASSWORD } = require("../config");
+const { adminMiddleware } = require("../middleware/admin");
+const course = require("./course");
 
 adminRouter.post('/signup',async (req,res)=>{
     const { email, password, firstName, lastName } = req.body; //TODO:  adding zod validations
@@ -49,9 +51,22 @@ adminRouter.post('/signin',async (req,res)=>{
     }
 })
 
-adminRouter.post('/course',(req,res)=>{
+adminRouter.post('/course', adminMiddleware, async (req,res)=>{
+
+    const adminId = req.userId;
+    const { title, description, imageUrl, price } = req.body;
+
+    const course = await courseModel.create({
+        title: title,
+        description: description,
+        imageUrl: imageUrl,
+        price: price,
+        creatorId: adminId
+    })
+
     res.json({
-        message: "signin endpoint"
+        message: "Course created",
+        courseId: course._id
     })
 })
 
