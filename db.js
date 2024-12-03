@@ -1,6 +1,6 @@
 const { Schema, default: mongoose } = require("mongoose");
-console.log("connected to")
-mongoose.connect("mongodb+srv://cyberkaps:kalpesh@cluster0.dyv70o5.mongodb.net/course-selling-web")
+// console.log("connected to")
+// mongoose.connect("mongodb+srv://cyberkaps:kalpesh@cluster0.dyv70o5.mongodb.net/course-selling-web")
 const user = require("./routes/user");
 
 const ObjectId = mongoose.Types.ObjectId;
