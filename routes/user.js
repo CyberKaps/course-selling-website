@@ -6,7 +6,8 @@ const { JWT_USER_PASSWORD } = require("../config");
 const { userMiddleware } = require("../middleware/user");
 
     userRouter.post('/signup',async (req,res)=>{
-        const { email, password, firstName, lastName } = req.body; //TODO:  adding zod validations
+        try{
+            const { email, password, firstName, lastName } = req.body; //TODO:  adding zod validations
         //TODO: hash the password with bcrypt
         
 
@@ -21,6 +22,11 @@ const { userMiddleware } = require("../middleware/user");
         res.json({
             message: "singnup succeeded"
         })
+        } catch(e){
+            res.status(400).json({
+                message: "Server ki ma ka bhosda"
+            })
+        }
     })
     
     userRouter.post('/signin',async (req,res)=>{
